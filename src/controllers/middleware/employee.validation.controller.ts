@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { Department } from "../models_ts/employee_ts";
+import { Department } from "../../models/employee";
 
 const Joi = require("joi");
 
-export const PostEmployeeJOI = Joi.object({
+export const ValidateInputsJOI = Joi.object({
   name: Joi.string().required(),
   salary: Joi.number().integer().required(),
   department: Joi.string()
@@ -12,12 +12,12 @@ export const PostEmployeeJOI = Joi.object({
 });
 
 // validate if employee inputs are correct
-export function postEmployeeValidate(
+export function inputValidation(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const employeeJOI = PostEmployeeJOI.validate(
+  const employeeJOI = ValidateInputsJOI.validate(
     {
       name: req.body.name,
       salary: req.body.salary,

@@ -1,11 +1,11 @@
 import express from "express";
-import { routes } from "./routes/routes";
 import { sequelize } from "./services/sequelize";
+import { employeeRouter } from "./routes/employee.routes";
 
 const app = express();
 app.use(express.json()); //pass json encoded objects
 
-routes(app);
+app.use('/employee', employeeRouter);
 
 app.listen(8000, () => {
   sequelize().authenticate();

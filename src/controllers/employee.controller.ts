@@ -1,15 +1,15 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import {
-  deleteEmployeeIDService,
-  getEmployeeIDService,
-  getEmployeeService,
-  postEmployeeService,
-  putEmployeeService,
+  deleteEmployee,
+  getEmployee,
+  getAllEmployees,
+  createEmployee,
+  updateEmployee,
 } from "../services/employee.services";
 
-export async function getEmployeeHandler(req: Request, res: Response) {
+export async function getAllEmployeesHandler(req: Request, res: Response) {
   try {
-    const employees = await getEmployeeService();
+    const employees = await getAllEmployees();
 
     res.send(employees);
   } catch (e) {
@@ -19,7 +19,7 @@ export async function getEmployeeHandler(req: Request, res: Response) {
 
 export async function postEmployeeHandler(req: Request, res: Response) {
   try {
-    const employee = await postEmployeeService(
+    const employee = await createEmployee(
       req.body.name,
       req.body.salary,
       req.body.department
@@ -30,9 +30,9 @@ export async function postEmployeeHandler(req: Request, res: Response) {
   }
 }
 
-export async function getEmployeeIDHandler(req: Request, res: Response) {
+export async function getEmployeeHandler(req: Request, res: Response) {
   try {
-    const employeeByID = await getEmployeeIDService(req.params.emp_id);
+    const employeeByID = await getEmployee(req.params.emp_id);
     if (employeeByID) {
       return res.send(employeeByID);
     } else {
@@ -46,7 +46,7 @@ export async function getEmployeeIDHandler(req: Request, res: Response) {
 export async function putEmployeeHandler(req: Request, res: Response) {
   //once i enter this function i know the details have been validated
   try {
-    const employee = await putEmployeeService(
+    const employee = await updateEmployee(
       req.params.emp_id,
       req.body.name,
       req.body.salary,
@@ -67,7 +67,7 @@ export async function putEmployeeHandler(req: Request, res: Response) {
 
 export async function deleteEmployeeHandler(req: Request, res: Response) {
   try {
-    const statusCode = await deleteEmployeeIDService(req.params.emp_id);
+    const statusCode = await deleteEmployee(req.params.emp_id);
     if (statusCode === 404) {
       return res.status(404).send({ errorMessage: "ID does not exist" });
     } else if (statusCode === 204) {

@@ -1,6 +1,6 @@
-import { Department, Employee } from "../models_ts/employee_ts";
+import { Department, Employee } from "../models/employee";
 
-export function getEmployeeService() {
+export function getAllEmployees() {
   return new Promise(async (resolve, reject) => {
     //generally when we have async functions we use a try catch block
     try {
@@ -13,7 +13,7 @@ export function getEmployeeService() {
   });
 }
 
-export function postEmployeeService(
+export function createEmployee(
   name: string,
   salary: number,
   department: Department
@@ -28,7 +28,7 @@ export function postEmployeeService(
   });
 }
 
-export function getEmployeeIDService(id: string) {
+export function getEmployee(id: string) {
   return new Promise(async (resolve, reject) => {
     try {
       const employee = await Employee.findOne({
@@ -41,7 +41,7 @@ export function getEmployeeIDService(id: string) {
   });
 }
 
-export function putEmployeeService(
+export function updateEmployee(
   id: string,
   name: string,
   salary: number,
@@ -76,7 +76,7 @@ export function putEmployeeService(
   });
 }
 
-export function deleteEmployeeIDService(id: string) {
+export function deleteEmployee(id: string) {
   return new Promise(async (resolve, reject) => {
     try {
       const employee = await Employee.findOne({
