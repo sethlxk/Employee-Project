@@ -7,7 +7,8 @@ const developmentConfig = {
   host: process.env.HOST || "",
   database: process.env.DATA_BASE || "",
   port: process.env.PORT || 5432,
-  dialect: "postgres"
+  dialect: "postgres",
+  secret: process.env.ACCESS_TOKEN_SECRET
 }
 
 const testConfig = {
@@ -27,7 +28,6 @@ const productionConfig = {
   port: process.env.PORT,
   dialect: "postgres"
 }
-console.log(developmentConfig.username)
 
 module.exports = 
 {

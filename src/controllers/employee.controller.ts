@@ -6,12 +6,29 @@ import {
   createEmployee,
   updateEmployee,
 } from "../services/employee.services";
+import { Employee } from "../models/employee";
+
+const departmentMap = new Map<number, string>([
+  [1, "Admin"],
+  [2, "PS"],
+  [3, "HR"],
+]);
 
 export async function getAllEmployeesHandler(req: Request, res: Response) {
   try {
-    const employees = await getAllEmployees();
-
-    res.send(employees);
+    let employees = (await getAllEmployees()) as Array<Employee>;
+    const sortedEmployees = [...employees];
+    sortedEmployees.sort((a: Employee, b: Employee) => a.id - b.id);
+    employees = sortedEmployees;
+    if (req.body.department === 1) {
+      res.send(employees);
+    } else {
+      employees = employees.filter(
+        (employee) =>
+          employee.department === departmentMap.get(req.body.department)
+      );
+      res.send(employees);
+    }
   } catch (e) {
     res.status(500).send({ errorMessage: "server error" });
   }
